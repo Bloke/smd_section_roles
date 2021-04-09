@@ -96,6 +96,7 @@ class smd_section_roles
 
         register_callback(array($this, 'install'), 'plugin_lifecycle.'.$this->event);
         register_callback(array($this, 'options'), 'plugin_prefs.'.$this->event, null, 1);
+        register_callback(array($this, 'stopId'), 'article', 'edit', 1);
         register_callback(array($this, 'constrain'), 'article_ui', 'validate_save');
         register_callback(array($this, 'constrain'), 'article_ui', 'validate_publish');
         register_callback(array($this, 'setSections'), 'article_ui', 'section');
@@ -230,6 +231,31 @@ class smd_section_roles
 
         $constraints['Section']->setOptions($options, 'choices');
         $constraints['Section']->setOptions(gTxt('smd_section_roles_restricted'), 'message');
+    }
+
+    /**
+     * Prevent article IDs outside the allowed sections from being edited/viewed.
+     *
+     * @param string $evt         Textpattern event
+     * @param string $stp         Textpattern step (action)
+     * @param array  $rs          Record set of article being edited
+     * @param array  $constraints Set of article constraints
+     */
+    public function stopId($evt, $stp)
+    {
+        $options = $this->userSections();
+        $ID = intval(gps('ID'));
+
+        if ($ID) {
+            $artSection = safe_field('Section', 'textpattern', "ID={$ID}");
+
+            if (!in_array($artSection, $options)) {
+                pagetop(gTxt('restricted_area'));
+                echo graf(gTxt('restricted_area'), array('class' => 'restricted-area'));
+                end_page();
+                exit;
+            }
+        }
     }
 
     /**
