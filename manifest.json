@@ -1,0 +1,11 @@
+{
+  "name": "smd_section_roles",
+  "description": "Limit publishing Textpattern articles to specific sections by role",
+  "version": "0.1.0",
+  "type": 4,
+  "author": "Stef Dawson",
+  "author_uri": "https://stefdawson.com/",
+  "order": 5,
+  "flags": 3,
+  "help": {"file" : ["./README.textile"]}
+}
