@@ -170,7 +170,7 @@ class smd_section_roles
         $options = $this->makeOpts();
 
         if (count($options) === 1) {
-            $out = current($options).hInput('Section', key($options));
+            $out = current($options)['title'].hInput('Section', key($options));
         } else {
             $out = selectInput('Section', $options, $rs['Section'], false, '', 'section');
         }
