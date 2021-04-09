@@ -271,7 +271,7 @@ class smd_section_roles
         $options = array();
 
         foreach ($sections as $sec) {
-            $options[$sec] = $txp_sections[$sec]['title'];
+            $options[$sec] = array('title' => $txp_sections[$sec]['title'], 'data-skin' => $txp_sections[$sec]['skin']);
         }
 
         return $options;
@@ -410,7 +410,6 @@ Depending on the restrictions put in place, users can then:
 
 h2. Known issues
 
-* Breaks the _Override form_ selector.
 * Doesn't (yet) restrict the multi-edit section assignment after submission.
 
 # --- END PLUGIN HELP ---
