@@ -101,6 +101,7 @@ class smd_section_roles
         register_callback(array($this, 'constrain'), 'article_ui', 'validate_publish');
         register_callback(array($this, 'setSections'), 'article_ui', 'section');
         register_callback(array($this, 'multiEditOpts'), 'list_ui', 'multi_edit_options');
+        register_callback(array($this, 'multiEditConstrain'), 'articles', 'multi_edit.changesection', 1);
         register_callback(array($this, 'skipSections'), 'admin_criteria', 'list_list');
         register_callback(array($this, 'skipSections'), 'txp.article', 'neighbour.criteria');
 
@@ -210,6 +211,23 @@ EOJS
             unset($multi['changesection']);
         } else {
             $multi['changesection']['html'] = selectInput('Section', $options, '', true);
+        }
+    }
+
+    /**
+     * Prevent multi-edit section changes from cheating the dropdown values.
+     *
+     * @param  string $evt     Textpattern event
+     * @param  string $stp     Textpattern step (action)
+     * @param  array  $payload Impending multi-edit information
+     */
+    public function multiEditConstrain($evt, $stp, $payload)
+    {
+        $options = $this->makeOpts();
+
+        if (!in_array($payload['value'], array_keys($options))) {
+            list_list(array(gTxt('smd_section_roles_restricted'), E_WARNING));
+            exit;
         }
     }
 
@@ -410,17 +428,13 @@ h2. Usage
 # Choose sections that each user level can post in.
 # Save the prefs.
 
-Depending on the restrictions put in place, users can then:
+Depending on the section restrictions put in place, users can then:
 
 * Only save/publish articles to one of the nominated sections.
 * Only see articles on the Articles list panel in sections they're permitted to post.
 * Only assign articles via multi-edit to sections they have access.
 * Only navigate next/prev between articles in sections to which they've been given access.
 * Not see/edit articles outside of their nominated sections.
-
-h2. Known issues
-
-* Doesn't (yet) restrict the multi-edit section assignment after submission.
 
 # --- END PLUGIN HELP ---
 -->

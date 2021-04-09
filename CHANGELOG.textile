@@ -2,4 +2,4 @@ h1. Changelog
 
 h2. 0.1.0 - 2021-04-09
 
-* Initial release for Txp 4.8+.
+* Initial release for Txp 4.8+ (requires 4.8.6 for full functionality).

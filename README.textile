@@ -7,14 +7,10 @@ h2. Usage
 # Choose sections that each user level can post in.
 # Save the prefs.
 
-Depending on the restrictions put in place, users can then:
+Depending on the section restrictions put in place, users can then:
 
 * Only save/publish articles to one of the nominated sections.
 * Only see articles on the Articles list panel in sections they're permitted to post.
 * Only assign articles via multi-edit to sections they have access.
 * Only navigate next/prev between articles in sections to which they've been given access.
 * Not see/edit articles outside of their nominated sections.
-
-h2. Known issues
-
-* Doesn't (yet) restrict the multi-edit section assignment after submission.
