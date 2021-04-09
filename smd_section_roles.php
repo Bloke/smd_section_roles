@@ -168,12 +168,22 @@ class smd_section_roles
     public function setSections($evt, $stp, $block, $rs)
     {
         $options = $this->makeOpts();
+        $js = $prepend = '';
 
         if (count($options) === 1) {
-            $out = current($options)['title'].hInput('Section', key($options));
+            $name = array('name' => 'Section', 'class' => 'ui-helper-hidden');
+            $prepend = current($options)['title'];
+            $js = script_js(<<<EOJS
+$(document).ready(function () {
+    $('#section').change();
+});
+EOJS
+            );
         } else {
-            $out = selectInput('Section', $options, $rs['Section'], false, '', 'section');
+            $name = 'Section';
         }
+
+        $out = $prepend.selectInput($name, $options, $rs['Section'], false, '', 'section').$js;
 
         return inputLabel(
             'section',
